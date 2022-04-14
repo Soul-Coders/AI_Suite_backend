@@ -11,9 +11,4 @@ def remove_bg(image):
     
     img = inference.predict(image)
     im_pil.putalpha(img)
-    # Image.open(im_PIL).show()
-
-    return "lol"
-
-
-    #return send_file('results/detected.png', mimetype='image/png')
+    return im_pil
