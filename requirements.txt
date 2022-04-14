@@ -1,0 +1,10 @@
+Flask
+Pillow
+opencv-python
+youtube-transcript-api
+sumy
+pytesseract
+tesseract-ocr
+libtesseract-dev
+onnxruntime
+

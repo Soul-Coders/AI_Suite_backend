@@ -15,7 +15,7 @@ from ocr import get_text
 from colors import generate_color
 from Colorizer.colorizer import Colorizer
 from summarizer import generate_summary
-from removebg import remove_bg
+from bg_eraser.removebg import remove_bg
 
 def create_app():
     # create and configure the app
@@ -59,6 +59,7 @@ def create_app():
     def rem():
         image = request.files.get('image')
         remove_bg(image)
+        return f"{image.filename}"
 
     return app
 
