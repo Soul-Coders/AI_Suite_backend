@@ -58,7 +58,8 @@ def create_app():
     @app.route("/bgremoval", methods=["POST"])
     def rem():
         image = request.files.get('image')
-        remove_bg(image)
+        img = remove_bg(image)
+        img.show()
         return f"{image.filename}"
 
     return app
