@@ -1,5 +1,5 @@
 from flask import (
-    Flask, jsonify, request
+    Flask, jsonify, request, send_file
 )
 from PIL import Image
 
@@ -23,7 +23,7 @@ def create_app():
 
     @app.route("/ocr", methods=["POST"])
     def ocr():
-        image = request.files['image']
+        image = request.files.get('image')
         txt = get_text(image)
         return jsonify({'text': txt})
         
@@ -37,13 +37,13 @@ def create_app():
     
     @app.route("/colors", methods=["POST"])
     def colors():
-        image = request.files['image'].read()
+        image = request.files.get('image').read()
         scheme = generate_color(image)
         return jsonify({'colors': scheme})
 
     @app.route("/colorize", methods=["POST"])
     def colorize():
-        image = request.files['image']
+        image = request.files.get('image')
         colorizer = Colorizer()
         colored = colorizer.process_img(image)
         Image.open(colored).show()
@@ -60,7 +60,7 @@ def create_app():
         image = request.files.get('image')
         img = remove_bg(image)
         img.show()
-        return f"{image.filename}"
+        return send_files()
 
     return app
 

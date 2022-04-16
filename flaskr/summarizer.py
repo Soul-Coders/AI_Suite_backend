@@ -6,7 +6,10 @@ from sumy.summarizers.lsa import LsaSummarizer
 def generate_summary(link):    
     def get_transcript(videolink):
         video_id = videolink.split("=")[1]
-        transcript = YouTubeTranscriptApi.get_transcript(video_id)
+        try:
+            transcript = YouTubeTranscriptApi.get_transcript(video_id, languages=['en'])
+        except:
+            return "Sorry, failed to summarize the video."
         text = ''
         for value in transcript:
             for key,val in value.items():
