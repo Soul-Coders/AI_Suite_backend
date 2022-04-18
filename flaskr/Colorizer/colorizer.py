@@ -50,7 +50,7 @@ class Colorizer:
         self.colorize_img()
 
         # save the colored image
-        new_img_name = 'ai-suite_colored_' + img.filename
+        new_img_name = 'created_by_daily_ai_suite_' + img.filename
         cv2.imwrite(new_img_name, self.out_img)
 
         return new_img_name

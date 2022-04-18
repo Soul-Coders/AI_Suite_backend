@@ -2,6 +2,9 @@ from flask import (
     Flask, jsonify, request, send_file
 )
 from PIL import Image
+import os
+
+TAG = 'created_by_daily_ai_suite_'
 
 # 1. OCR (CV2/Neural)
 # 2. Image Editing:
@@ -32,8 +35,11 @@ def create_app():
         value = request.form.get('value')
         file = request.files.get('image')
         img = Image.open(file)
-        img.save(file.filename, quality=int(value))
-        return jsonify({"new_img": file.filename})
+        img.save(TAG + file.filename, quality=int(value))
+        try:
+            return send_file(TAG + file.filename)
+        finally:
+            os.remove(TAG + file.filename)
     
     @app.route("/colors", methods=["POST"])
     def colors():
@@ -46,8 +52,10 @@ def create_app():
         image = request.files.get('image')
         colorizer = Colorizer()
         colored = colorizer.process_img(image)
-        Image.open(colored).show()
-        return f"{image.filename}"
+        try:
+            return send_file(colored)
+        finally:
+            os.remove(TAG + image.filename)
 
     @app.route("/summarize", methods=["POST"])
     def summarize():
@@ -59,9 +67,12 @@ def create_app():
     def rem():
         image = request.files.get('image')
         img = remove_bg(image)
-        img.show()
-        return send_files()
-
+        filename = TAG + image.filename[:-3] + 'png'
+        img.save(filename)
+        try:
+            return send_file(filename)
+        finally:
+            os.remove(filename)
     return app
 
 
