@@ -1,6 +1,8 @@
 from flask import (
     Flask, jsonify, request, send_file
 )
+from flask_cors import CORS
+
 from PIL import Image
 import os
 
@@ -23,6 +25,7 @@ from bg_eraser.removebg import remove_bg
 def create_app():
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
+    CORS(app)
 
     @app.route("/ocr", methods=["POST"])
     def ocr():

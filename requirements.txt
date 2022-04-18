@@ -7,4 +7,4 @@ pytesseract
 tesseract-ocr
 libtesseract-dev
 onnxruntime
-
+Flask-Cors
